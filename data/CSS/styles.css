@@ -1,0 +1,473 @@
+    /* Basic styling for the Drone HUD */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 60px;
+      background-color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+    }
+    .sidebar button {
+      background: none;
+      border: none;
+      margin: 10px 0;
+      cursor: pointer;
+      color: #fff;
+      font-size: 16px;
+    }
+    .sidebar button:hover {
+      color: #00aaff;
+    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .toolbar {
+      height: 50px;
+      background-color: #444;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+    .content {
+      flex: 1;
+      display: none;
+      padding: 20px;
+    }
+
+    #plan-page {
+      display: grid;
+      grid-template-columns: 2fr 1fr; /* Left column gets twice the space */
+      gap: 20px;
+      /* Calculate available height (toolbar is 50px + 20px padding roughly) */
+      height: calc(100vh - 70px);
+      padding: 20px; /* optional: adjust overall padding */
+      box-sizing: border-box;
+    }
+    
+    .plan-left {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    /* Make the Blockly area expand in the left column */
+    /* #blocklyDiv {
+      flex: 1;
+      width: 100%;
+      background-color: #f0f0f0;
+      border: 0.5px solid #ccc;
+      border-radius: 8px;
+      padding: 5px;
+      box-sizing: border-box;
+    } */
+
+    
+    .generate-button {
+      margin-top: auto;  /* pushes the button to the bottom of the flex container */
+      padding: 10px;
+      width: 100%;
+      background-color: #00aaff;
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+    .generate-button:hover {
+      background-color: #0088cc;
+    }
+          
+
+          
+    .map-area-plan {
+      background-color: #2d2d2d;
+      border: 2px solid white;
+      border-radius: 8px;
+      color: #777;
+      font-size: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .center-me-button-fly {
+      position: absolute;
+      top: 90px;
+      right: 400px;
+      z-index: 1000; /* ensures the button is on top of the map */
+      font-size: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .download-mission-fly {
+      position: absolute;
+      top: 130px;
+      right: 400px;
+      z-index: 1000; /* ensures the button is on top of the map */
+      font-size: 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .center-me-button-plan {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      font-size: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .add-marker-button-plan {
+      position: absolute;
+      top: 50px; /* Adjusted to be below the Center on Drone button */
+      right: 10px;
+      z-index: 1000;
+      font-size: 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .sketch-button {
+      position: absolute;
+      top: 90px; /* Adjusted to be below the Center on Drone button */
+      left: 10px;
+      z-index: 1000;
+      font-size: 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .sketch-cursor {
+      cursor: url('pencil-icon.png'), crosshair;  /* replace with your pencil icon URL */
+    }
+   .erase-button {
+    position: absolute;
+    top: 130px; /* Adjusted to be below the Center on Drone button */
+    left: 10px;
+    z-index: 1000;
+    font-size: 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   }
+   /* Eraser Size Controls Container */
+#eraser-size-controls {
+  position: absolute;
+  top: 160px; /* Adjust this value as needed (below the erase button) */
+  left: 10px;
+  z-index: 1000;
+  background-color: #28a745;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* Eraser Control Buttons (minus and plus) */
+#eraser-size-controls button {
+  font-size: 20px;
+  background-color: #fff;
+  color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 2px 5px;
+  margin: 0 5px;
+}
+
+/* Eraser Size Display */
+#eraser-size-display {
+  font-size: 15px;
+  color: #fff;
+  font-weight: bold;
+}
+   
+
+    #eraser-overlay {
+      position: absolute;
+      pointer-events: none;  /* so it won’t block map interactions */
+      border: 2px solid white;
+      border-radius: 50%;
+      z-index: 1000;
+    }
+    
+
+/* Download Sketch Button */
+#download-sketch-button {
+  position: absolute;
+  top: 170px;
+  left: 10px;
+  z-index: 1000;
+  font-size: 16px;
+  background-color: #17a2b8;  /* teal */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+/* Load Sketch Button */
+#load-sketch-button {
+  position: absolute;
+  top: 210px;
+  left: 10px;
+  z-index: 1000;
+  font-size: 16px;
+  background-color: #6c757d;  /* gray */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+
+
+
+    .marker-info-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px;
+      font-size: 14px;
+      z-index: 1000;
+    }
+    
+    .custom-marker-icon {
+      background: transparent;
+      border: none;
+    }
+
+    .custom-static-marker-icon {
+      /* Example styling for static markers */
+      background-color: #ffcc00;
+      border-radius: 50%;
+      color: black;
+      text-align: center;
+      font-weight: bold;
+      /* Remove any extra styling that might imply dragability */
+    }
+    
+    .custom-marker-label {
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    #custom-context-menu {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      border-radius: 3px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    }
+    #custom-context-menu button {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    #custom-context-menu button:hover {
+      background: #c82333;
+    }
+
+
+    #fly-page {
+      display: flex;
+    }
+    .map-area {
+      flex: 3;
+      background-color: #2d2d2d;
+      border: 2px solid white;
+      border-radius: 10px;
+      margin-right: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #777;
+      font-size: 24px;
+    }
+    .start-mission-button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .start-mission-button:hover {
+      background-color: #218838;
+    }
+    .hud-panel {
+      flex: 0.5;
+      background-color: #2d2d2d;
+      padding: 10px;
+      border: 2px solid white;
+      border-radius: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .hud-title {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .canvas-wrapper {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    canvas {
+      width: 140px;
+      height: 140px;
+      border: 1px solid white;
+      border-radius: 50%;
+    }
+    .hud-value-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 10px;
+    }
+    .hud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .hud-value {
+      font-size: 18px;
+    }
+    /* Battery display styling */
+    .battery-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .battery-icon {
+      font-size: 24px;
+    }
+    .battery-value {
+      font-size: 18px;
+      margin: 0;
+    }
+    /* Signal display styling */
+    .signal-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .signal-icon {
+      font-size: 24px;
+    }
+    .signal-value {
+      font-size: 18px;
+      margin: 0;
+    }
+    /* Flight status styling */
+    .flight-status {
+      text-align: center;
+      background-color: #444;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .flight-status-text {
+      margin: 0;
+      font-size: 18px;
+    }
+    /* Button grid for mode changes */
+    .button-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .button-row {
+      display: flex;
+      justify-content: space-around;
+    }
+    .button-grid button {
+      width: 48%;
+      padding: 10px 20px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      background-color: #00aaff;
+      color: #fff;
+      cursor: pointer;
+    }
+    .button-grid button:hover {
+      background-color: #0088cc;
+    }
+    /* Status text box styling */
+    .statustext-box {
+      background-color: #222;
+      border: 1px solid #555;
+      padding: 10px;
+      border-radius: 5px;
+      max-height: 100px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+    .statustext {
+      font-size: 14px;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    /* Bottom gap */
+    .bottom-gap {
+      height: 30px;
+    }

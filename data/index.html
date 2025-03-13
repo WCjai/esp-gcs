@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WC mCar</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="leaflet.css" />
+</head>
+<body>
+
+  <div class="sidebar">
+    <button onclick="showSection('plan-page')">Plan</button>
+    <button onclick="showSection('fly-page')">Fly</button>
+    <button onclick="showSection('setup-page')">Setup</button>
+  </div>
+  <div class="main-content">
+    <div class="toolbar">
+      <h1>mCar</h1>
+    </div>
+    <!-- Plan Page -->
+    <div id="plan-page" class="content">
+      <!-- Left Column: Drone Coding Area with Generate Button -->
+      <div class="plan-left">
+        <div id="blocklyDiv" style="height: 93%; width: 99%; padding: 5px; border-radius: 8px; background-color: #f0f0f0; border: 0.5px solid #ccc;"></div>
+        <button class="generate-button" onclick="generateMission()">Generate Mission</button>
+      </div>
+    
+      <!-- Right Column: Map Area -->
+      <div class="map-area-plan" style="flex: 1; padding: 10px;">
+        <div class="map-container" id="map" style="position: relative; height: 100%; width: 100%;">
+          <button class="center-me-button-plan" onclick="centerMap(map, droneMarkerMap)">🛩️</button>
+          <!-- Add Marker button placed below the center button -->
+          <button class="add-marker-button-plan" onclick="addPlanMarker()">🎯</button>
+          <button id="sketch-button" class="sketch-button" onclick="toggleSketchMode()">✏️</button>
+          <button id="erase-button" class="erase-button" onclick="toggleEraseMode()">🧽</button>
+
+          <button id="download-sketch-button" onclick="downloadSketch()">💾</button>
+          <button id="load-sketch-button" onclick="document.getElementById('sketch-file-input').click()">📥</button>
+
+          <input type="file" id="sketch-file-input" style="display: none;" onchange="loadSketch(event)">
+          <div id="eraser-size-controls"  style="display:none; margin-top:5px;">
+            <button id="eraser-minus" onclick="changeEraserSize(-1)">–</button>
+            <span id="eraser-size-display">10</span>
+            <button id="eraser-plus" onclick="changeEraserSize(1)">+</button>
+          </div>      
+          <!-- Bottom Bar to Display Marker Coordinates -->
+          <div class="marker-info-bar">
+            Marker Info: <span id="marker-info"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fly Page -->
+    <div id="fly-page" class="content">
+      <div class="map-area">
+        <button class="center-me-button-fly" onclick="centerMap(map_1, droneMarkerMap1)">🛩️</button>
+        <button class="download-mission-fly" onclick="clearmissionClient()">🧹</button>
+        <label style="position: absolute; top: 170px; left: 90px; z-index: 1000; background-color: #f8f9fa; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: #333;">
+          ✏️<input type="checkbox" id="display-sketch-checkbox" onchange="toggleFlySketchDisplay()">
+        </label>
+        <div id="map_1" style="height: 100%; width: 100%;"></div>
+      </div>
+      <div class="hud-panel">
+        <h2 class="hud-title">Drone HUD</h2>
+        <div class="canvas-wrapper">
+          <canvas id="horizonCanvas" width="140" height="140"></canvas>
+          <canvas id="compassCanvas" width="140" height="140"></canvas>
+        </div>
+        <div class="hud-value-wrapper">
+          <!-- Top row: Altitude and Battery Voltage -->
+          <div class="hud-row">
+            <p class="hud-value">Altitude-rel (m): <span id="altitude">--</span></p>
+            <div class="battery-box">
+              <div class="battery-icon">🔋</div>
+              <p class="battery-value"><span id="batteryVoltage">--</span> V</p>
+            </div>
+          </div>
+          <!-- Second row: Ground Speed and Signal -->
+          <div class="hud-row">
+            <p class="hud-value">Ground Speed (m/s): <span id="speed">--</span></p>
+            <div class="signal-box">
+              <div class="signal-icon" id="signalIcon">📶</div>
+              <p class="signal-value"><span id="rssi">--</span> %</p>
+            </div>
+          </div>
+          <!-- Flight Status Row -->
+          <div class="flight-status">
+            <p class="flight-status-text" id="flightStatus">Armed: -- | Mode: --</p>
+          </div>
+          <!-- Mode-change Buttons Grid -->
+          <div class="button-grid">
+            <div class="button-row">
+              <button onclick="setFlightMode('position')">Position Mode</button>
+              <button onclick="setFlightMode('altitude')">Altitude Mode</button>
+            </div>
+            <div class="button-row">
+              <button onclick="setFlightMode('stabilize')">Stabilize Mode</button>
+              <button onclick="setFlightMode('land')">Land Mode</button>
+            </div>
+          </div>
+          <!-- Status Text Box -->
+          <div class="statustext-box">
+            <p class="statustext" id="statustext">No messages</p>
+          </div>
+          <!-- Start Mission Button -->
+          <div class="start-mission-container" style="text-align: center; margin-top: 10px;">
+            <button class="start-mission-button" onclick="startMissionClient()">Start Mission</button>
+          </div>          
+          <!-- Bottom Gap -->
+          <div class="bottom-gap"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Setup Page -->
+    <div id="setup-page" class="content">
+      <h2>Setup Page</h2>
+      <p>This section will include setup configuration options.</p>
+    </div>
+  </div>
+  
+  <script src="leaflet.js"></script>
+  <script src="leaflet.rotatedMarker.js"></script>
+  <script src="blockly_compressed.js"></script>
+  <script src="blocks_compressed.js"></script>
+  <script src="javascript_compressed.js"></script>
+  <script src="msg/js/en.js"></script>
+  <script src="script.js"></script>
+  
+</body>
+</html>

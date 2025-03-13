@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../webpage-demo"
+		},
+		{
+			"name": "esp32-px4-website",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
